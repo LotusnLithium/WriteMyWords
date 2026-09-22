@@ -650,6 +650,25 @@ section {
   font-weight: 500;
   color: var(--ink);
   flex-wrap: wrap;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+  .hero-announcement-pill {
+    padding: 6px 12px;
+    font-size: 12px;
+    gap: 6px;
+    border-radius: var(--r-md);
+  }
+  .hero-announcement-pill .pill-tag {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+  .hero-announcement-pill .pill-text {
+    font-size: 12px;
+    line-height: 1.35;
+  }
 }
 
 .pulse-dot {
@@ -659,6 +678,7 @@ section {
   background: var(--blue);
   box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7);
   animation: pulse 2s infinite;
+  flex-shrink: 0;
 }
 
 @keyframes pulse {
@@ -682,6 +702,7 @@ section {
   padding: 2px 7px;
   border-radius: var(--r-full);
   letter-spacing: 0.05em;
+  flex-shrink: 0;
 }
 
 .pill-text {
@@ -689,11 +710,13 @@ section {
 }
 
 .hero-title {
-  font-size: clamp(30px, 5.2vw, 52px);
-  line-height: 1.12;
+  font-size: clamp(26px, 5.2vw, 50px);
+  line-height: 1.14;
   letter-spacing: -0.02em;
   color: var(--ink);
   margin-bottom: 16px;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .hero-gradient-text {
@@ -703,11 +726,13 @@ section {
 }
 
 .hero-subtitle {
-  font-size: clamp(15.5px, 2vw, 18.5px);
+  font-size: clamp(14.5px, 2vw, 17.5px);
   color: var(--ink-secondary);
   line-height: 1.6;
   max-width: 52ch;
-  margin-bottom: 26px;
+  margin-bottom: 24px;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .hero-cta-group {
@@ -732,7 +757,7 @@ section {
   box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .hero-cta {
     flex-direction: column;
     width: 100%;
@@ -746,10 +771,20 @@ section {
 .hero-micro-reassurance {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 8px 12px;
   font-size: 13px;
   color: var(--ink-muted);
   flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+  .hero-micro-reassurance {
+    font-size: 12px;
+    gap: 6px 10px;
+  }
+  .hero-micro-reassurance .bullet-sep {
+    display: none;
+  }
 }
 
 .bullet-sep {
@@ -764,11 +799,13 @@ section {
   padding-top: 20px;
   border-top: 1px solid var(--border);
   width: 100%;
+  flex-wrap: wrap;
 }
 
 .avatar-group {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .hero-avatar {
@@ -830,12 +867,13 @@ section {
   padding: 24px;
   box-shadow: var(--shadow-lg);
   position: relative;
+  box-sizing: border-box;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .hero-interactive-card {
-    padding: 18px 14px;
-    border-radius: var(--r-lg);
+    padding: 16px 14px;
+    border-radius: var(--r-md);
   }
 }
 
@@ -846,6 +884,8 @@ section {
   padding-bottom: 14px;
   border-bottom: 1px solid var(--border);
   margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .showcase-live-indicator {

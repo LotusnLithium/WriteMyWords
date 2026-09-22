@@ -334,7 +334,7 @@ export default function Home() {
 
       {/* Open Requests Live Preview */}
       <section className="wrap">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 28, flexWrap: 'wrap', gap: 16 }}>
+        <div className="dash-header-wrap" style={{ alignItems: 'flex-end', marginBottom: 24 }}>
           <div>
             <div className="eyebrow">ACTIVE BOARD</div>
             <h2 style={{ marginTop: 6 }}>Recent open requests</h2>
