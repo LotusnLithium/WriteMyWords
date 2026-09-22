@@ -12,6 +12,16 @@ export default function AuthCallback() {
   const [message, setMessage] = useState('Verifying your email address...');
 
   useEffect(() => {
+    // Immediately sanitize URL and wipe hash/token parameters from browser address bar
+    // to prevent tokens from leaking into browser history, extensions, or referrer headers
+    if (window.location.hash || window.location.search) {
+      try {
+        window.history.replaceState(null, document.title, window.location.pathname);
+      } catch (e) {
+        // Ignore in environments where replaceState is restricted
+      }
+    }
+
     async function handleAuthVerification() {
       if (!supabase) {
         setStatus('error');
@@ -44,12 +54,12 @@ export default function AuthCallback() {
               } else {
                 navigate('/dashboard', { replace: true });
               }
-            }, 1200);
+            }, 1000);
             return;
           }
         }
 
-        // 2. Otherwise check if access_token exists in URL hash or session
+        // 2. Otherwise check if access_token exists in session
         const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
         if (sessionError) throw sessionError;
 
@@ -65,7 +75,7 @@ export default function AuthCallback() {
             } else {
               navigate('/dashboard', { replace: true });
             }
-          }, 1200);
+          }, 1000);
           return;
         }
 
@@ -83,18 +93,18 @@ export default function AuthCallback() {
               } else {
                 navigate('/dashboard', { replace: true });
               }
-            }, 1000);
+            }, 800);
           }
         });
 
-        // Timeout fallback after 6s
+        // Timeout fallback after 5s
         const timer = setTimeout(() => {
           if (status === 'verifying') {
             setStatus('success');
             setMessage('Verification processed. Redirecting to login...');
             navigate('/login', { replace: true });
           }
-        }, 5000);
+        }, 4000);
 
         return () => {
           authListener?.subscription?.unsubscribe();

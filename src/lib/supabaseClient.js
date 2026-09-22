@@ -180,7 +180,7 @@ export async function getProfile(userId, authUser = null) {
 /* ---------------- requests ---------------- */
 export async function insertRequest(row, userId) {
   if (!supabase) {
-    console.warn('Supabase not configured — request stored locally:', row);
+    console.warn('Supabase not configured — request stored locally in demo session.');
     return null;
   }
   try {
