@@ -263,7 +263,7 @@ export async function fetchOpenRequests() {
       // Fallback: try querying requests table directly if view wasn't created yet
       const { data: tableData } = await supabase
         .from('requests')
-        .select('id, title, category, subject, academic_level, description, budget_min, budget_max, deadline, created_at')
+        .select('id, title, category, subject, academic_level, description, budget_min, budget_max, deadline, status, created_at')
         .order('created_at', { ascending: false });
       return tableData || [];
     }
@@ -273,3 +273,125 @@ export async function fetchOpenRequests() {
     return [];
   }
 }
+
+export async function fetchAssignedRequests(expertId) {
+  if (!supabase || !expertId) return [];
+  try {
+    const { data, error } = await supabase
+      .from('requests')
+      .select('*')
+      .eq('expert_id', expertId)
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.warn('fetchAssignedRequests query note:', error.message);
+      return [];
+    }
+    return data || [];
+  } catch (e) {
+    console.warn('fetchAssignedRequests exception:', e);
+    return [];
+  }
+}
+
+export async function claimRequestInDB(requestId, expertId, expertName) {
+  if (!supabase) return null;
+  try {
+    const { data, error } = await supabase
+      .from('requests')
+      .update({
+        expert_id: expertId,
+        expert_name: expertName,
+        status: 'in_progress',
+      })
+      .eq('id', requestId)
+      .select()
+      .maybeSingle();
+
+    if (error) {
+      console.warn('claimRequestInDB error:', error.message);
+      return null;
+    }
+    return data;
+  } catch (e) {
+    console.warn('claimRequestInDB exception:', e);
+    return null;
+  }
+}
+
+export async function submitDeliverableInDB(requestId, { notes, files }) {
+  if (!supabase) return null;
+  try {
+    const { data, error } = await supabase
+      .from('requests')
+      .update({
+        submission_notes: notes,
+        submission_files: files,
+        submitted_at: new Date().toISOString(),
+        status: 'submitted',
+      })
+      .eq('id', requestId)
+      .select()
+      .maybeSingle();
+
+    if (error) {
+      console.warn('submitDeliverableInDB error:', error.message);
+      return null;
+    }
+    return data;
+  } catch (e) {
+    console.warn('submitDeliverableInDB exception:', e);
+    return null;
+  }
+}
+
+export async function approveDeliverableInDB(requestId, { rating, feedback }) {
+  if (!supabase) return null;
+  try {
+    const { data, error } = await supabase
+      .from('requests')
+      .update({
+        student_rating: rating,
+        student_feedback: feedback,
+        completed_at: new Date().toISOString(),
+        status: 'completed',
+      })
+      .eq('id', requestId)
+      .select()
+      .maybeSingle();
+
+    if (error) {
+      console.warn('approveDeliverableInDB error:', error.message);
+      return null;
+    }
+    return data;
+  } catch (e) {
+    console.warn('approveDeliverableInDB exception:', e);
+    return null;
+  }
+}
+
+export async function requestRevisionInDB(requestId, { revisionNotes }) {
+  if (!supabase) return null;
+  try {
+    const { data, error } = await supabase
+      .from('requests')
+      .update({
+        revision_notes: revisionNotes,
+        status: 'revision_requested',
+      })
+      .eq('id', requestId)
+      .select()
+      .maybeSingle();
+
+    if (error) {
+      console.warn('requestRevisionInDB error:', error.message);
+      return null;
+    }
+    return data;
+  } catch (e) {
+    console.warn('requestRevisionInDB exception:', e);
+    return null;
+  }
+}
+

@@ -6,6 +6,16 @@ export default function RequestCard({ r, onClick }) {
   const budgetMin = Number(r.budget_min ?? r.budgetMin ?? 0);
   const budgetMax = Number(r.budget_max ?? r.budgetMax ?? 0);
 
+  const statusConfig = {
+    open: { label: 'Open', color: 'var(--blue)', bg: 'var(--blue-subtle)' },
+    in_progress: { label: 'In Progress', color: 'var(--warning)', bg: 'var(--warning-subtle)' },
+    submitted: { label: 'Ready for Review', color: 'var(--indigo)', bg: 'var(--indigo-subtle)' },
+    completed: { label: 'Completed', color: 'var(--success)', bg: 'var(--success-subtle)' },
+    revision_requested: { label: 'Revision', color: 'var(--error)', bg: 'var(--error-subtle)' },
+  };
+
+  const statusInfo = statusConfig[r.status] || statusConfig.open;
+
   return (
     <div 
       className="card card-interactive" 
@@ -13,13 +23,29 @@ export default function RequestCard({ r, onClick }) {
       style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}
     >
       <div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8, marginBottom: 12 }}>
-          <span className="badge">{r.category || 'Academic'}</span>
-          {r.academic_level && (
-            <span className="badge badge-neutral" style={{ fontSize: 11 }}>
-              {r.academic_level}
-            </span>
-          )}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8, marginBottom: 12, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+            <span className="badge">{r.category || 'Academic'}</span>
+            {r.academic_level && (
+              <span className="badge badge-neutral" style={{ fontSize: 11 }}>
+                {r.academic_level}
+              </span>
+            )}
+          </div>
+          <span
+            style={{
+              fontSize: 11.5,
+              fontWeight: 700,
+              padding: '2px 8px',
+              borderRadius: 'var(--r-full)',
+              color: statusInfo.color,
+              background: statusInfo.bg,
+              textTransform: 'uppercase',
+              letterSpacing: '0.04em',
+            }}
+          >
+            {statusInfo.label}
+          </span>
         </div>
 
         <h3 style={{ fontSize: 17, lineHeight: 1.35, marginBottom: 8, color: 'var(--ink)' }}>

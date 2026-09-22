@@ -3,6 +3,7 @@ import { Link, Navigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext.jsx';
 import RequestCard from '../components/RequestCard.jsx';
 import RequestDetailModal from '../components/RequestDetailModal.jsx';
+import ReviewSubmissionModal from '../components/ReviewSubmissionModal.jsx';
 import {
   IconTrendingUp,
   IconZap,
@@ -11,12 +12,16 @@ import {
   IconMessageSquare,
   IconCheckCircle,
   IconClock,
+  IconStar,
+  IconAlertCircle,
+  IconSend,
 } from '../components/Icons.jsx';
 
 export default function StudentDashboard() {
   const { user, authLoading, myRequests } = useApp();
-  const [tab, setTab] = useState('all');
+  const [tab, setTab] = useState('all'); // 'all' | 'review' | 'progress' | 'open' | 'completed'
   const [selectedRequest, setSelectedRequest] = useState(null);
+  const [reviewingRequest, setReviewingRequest] = useState(null);
 
   if (authLoading) {
     return (
@@ -32,6 +37,26 @@ export default function StudentDashboard() {
   }
 
   const firstName = user.name ? user.name.split(' ')[0] : 'Student';
+
+  // Computed buckets
+  const openRequests = myRequests.filter((r) => r.status === 'open' || !r.status);
+  const inProgressRequests = myRequests.filter(
+    (r) => r.status === 'in_progress' || r.status === 'revision_requested'
+  );
+  const readyForReviewRequests = myRequests.filter((r) => r.status === 'submitted');
+  const completedRequests = myRequests.filter((r) => r.status === 'completed');
+
+  // Filtered list based on active tab
+  const displayedRequests =
+    tab === 'review'
+      ? readyForReviewRequests
+      : tab === 'progress'
+      ? inProgressRequests
+      : tab === 'open'
+      ? openRequests
+      : tab === 'completed'
+      ? completedRequests
+      : myRequests;
 
   return (
     <div className="app-shell">
@@ -54,13 +79,52 @@ export default function StudentDashboard() {
             <div className="eyebrow" style={{ marginBottom: 4 }}>STUDENT WORKSPACE</div>
             <h1 style={{ fontSize: 'clamp(24px, 4vw, 32px)' }}>Welcome back, {firstName}</h1>
             <p className="muted" style={{ fontSize: 14.5, marginTop: 4 }}>
-              Track your open academic requests, review offers, and collaborate with experts.
+              Track your open academic requests, review expert submissions, and approve completed projects.
             </p>
           </div>
           <Link to="/dashboard/requests/new" className="btn btn-primary">
             + Post a New Request
           </Link>
         </div>
+
+        {/* Action Alert Banner when an expert submitted work */}
+        {readyForReviewRequests.length > 0 && (
+          <div
+            style={{
+              background: 'var(--indigo-subtle)',
+              border: '1px solid var(--indigo)',
+              borderRadius: 'var(--r-sm)',
+              padding: '16px 20px',
+              marginBottom: 24,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: 14,
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'var(--indigo)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <IconSend size={20} color="#fff" />
+              </div>
+              <div>
+                <strong style={{ color: 'var(--indigo)', fontSize: 16 }}>
+                  {readyForReviewRequests.length} Deliverable(s) Ready for Your Review!
+                </strong>
+                <div style={{ fontSize: 13.5, color: 'var(--ink-secondary)', marginTop: 2 }}>
+                  Your assigned academic expert has submitted completed solution files. Review and approve or request revisions.
+                </div>
+              </div>
+            </div>
+            <button
+              className="btn btn-primary"
+              style={{ background: 'var(--indigo)', borderColor: 'var(--indigo)', fontSize: 13.5 }}
+              onClick={() => setReviewingRequest(readyForReviewRequests[0])}
+            >
+              Review Deliverable Now →
+            </button>
+          </div>
+        )}
 
         {/* Metrics Grid */}
         <div className="metric-row">
@@ -71,20 +135,11 @@ export default function StudentDashboard() {
                 <IconFileText size={20} color="var(--blue)" />
               </div>
             </div>
-            <div className="lbl">Active Requests</div>
+            <div className="lbl">Total Requests</div>
           </div>
           <div className="metric">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div className="num">0</div>
-              <div style={{ width: 38, height: 38, borderRadius: 'var(--r-sm)', background: 'var(--indigo-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <IconMessageSquare size={20} color="var(--indigo)" />
-              </div>
-            </div>
-            <div className="lbl">Offers Received</div>
-          </div>
-          <div className="metric">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div className="num">0</div>
+              <div className="num" style={{ color: 'var(--warning)' }}>{inProgressRequests.length}</div>
               <div style={{ width: 38, height: 38, borderRadius: 'var(--r-sm)', background: 'var(--warning-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <IconZap size={20} color="var(--warning)" />
               </div>
@@ -93,18 +148,27 @@ export default function StudentDashboard() {
           </div>
           <div className="metric">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div className="num">0</div>
+              <div className="num" style={{ color: 'var(--indigo)' }}>{readyForReviewRequests.length}</div>
+              <div style={{ width: 38, height: 38, borderRadius: 'var(--r-sm)', background: 'var(--indigo-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <IconMessageSquare size={20} color="var(--indigo)" />
+              </div>
+            </div>
+            <div className="lbl">Ready for Review</div>
+          </div>
+          <div className="metric">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div className="num" style={{ color: 'var(--success)' }}>{completedRequests.length}</div>
               <div style={{ width: 38, height: 38, borderRadius: 'var(--r-sm)', background: 'var(--success-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <IconCheckCircle size={20} color="var(--success)" />
               </div>
             </div>
-            <div className="lbl">Completed Reviews</div>
+            <div className="lbl">Completed Projects</div>
           </div>
         </div>
 
         {/* Requests Management Section */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 18, flexWrap: 'wrap', gap: 12 }}>
-          <h2 style={{ fontSize: 20 }}>Your Posted Requests</h2>
+          <h2 style={{ fontSize: 20 }}>Your Academic Requests</h2>
           <div className="chip-row" style={{ margin: 0, padding: 0 }}>
             <button
               className={`chip ${tab === 'all' ? 'selected' : ''}`}
@@ -113,21 +177,45 @@ export default function StudentDashboard() {
               All ({myRequests.length})
             </button>
             <button
+              className={`chip ${tab === 'review' ? 'selected' : ''}`}
+              onClick={() => setTab('review')}
+            >
+              Needs Review ({readyForReviewRequests.length})
+            </button>
+            <button
+              className={`chip ${tab === 'progress' ? 'selected' : ''}`}
+              onClick={() => setTab('progress')}
+            >
+              In Progress ({inProgressRequests.length})
+            </button>
+            <button
               className={`chip ${tab === 'open' ? 'selected' : ''}`}
               onClick={() => setTab('open')}
             >
-              Open ({myRequests.length})
+              Open ({openRequests.length})
+            </button>
+            <button
+              className={`chip ${tab === 'completed' ? 'selected' : ''}`}
+              onClick={() => setTab('completed')}
+            >
+              Completed ({completedRequests.length})
             </button>
           </div>
         </div>
 
-        {myRequests.length > 0 ? (
+        {displayedRequests.length > 0 ? (
           <div className="grid grid-3">
-            {myRequests.map((r) => (
+            {displayedRequests.map((r) => (
               <RequestCard
                 r={r}
                 key={r.id}
-                onClick={(req) => setSelectedRequest(req)}
+                onClick={(req) => {
+                  if (req.status === 'submitted') {
+                    setReviewingRequest(req);
+                  } else {
+                    setSelectedRequest(req);
+                  }
+                }}
               />
             ))}
           </div>
@@ -136,12 +224,12 @@ export default function StudentDashboard() {
             <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'var(--blue-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
               <IconFileText size={28} color="var(--blue)" />
             </div>
-            <h3 style={{ fontSize: 20, marginBottom: 8 }}>You haven't posted any requests yet</h3>
+            <h3 style={{ fontSize: 20, marginBottom: 8 }}>No requests found in this view</h3>
             <p className="muted" style={{ maxWidth: 460, margin: '0 auto 24px', fontSize: 14.5 }}>
-              Need help structuring research, proofreading an essay, formatting citations, or preparing for an exam?
+              Post a new academic request or choose a different status filter above.
             </p>
             <Link to="/dashboard/requests/new" className="btn btn-primary">
-              Post Your First Request Free →
+              Post a New Request →
             </Link>
           </div>
         )}
@@ -151,6 +239,18 @@ export default function StudentDashboard() {
           <RequestDetailModal
             request={selectedRequest}
             onClose={() => setSelectedRequest(null)}
+          />
+        )}
+
+        {/* Review Submission Modal */}
+        {reviewingRequest && (
+          <ReviewSubmissionModal
+            request={reviewingRequest}
+            onClose={() => setReviewingRequest(null)}
+            onSuccess={() => {
+              setReviewingRequest(null);
+              setTab('completed');
+            }}
           />
         )}
       </main>

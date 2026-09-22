@@ -281,3 +281,41 @@ export function IconPaperclip(props) {
     </SvgIcon>
   );
 }
+
+export function IconStar(props) {
+  return (
+    <SvgIcon {...props}>
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+    </SvgIcon>
+  );
+}
+
+export function IconDownload(props) {
+  return (
+    <SvgIcon {...props}>
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+      <polyline points="7 10 12 15 17 10"></polyline>
+      <line x1="12" y1="15" x2="12" y2="3"></line>
+    </SvgIcon>
+  );
+}
+
+export function IconRotateCcw(props) {
+  return (
+    <SvgIcon {...props}>
+      <polyline points="1 4 1 10 7 10"></polyline>
+      <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+    </SvgIcon>
+  );
+}
+
+export function IconAlertCircle(props) {
+  return (
+    <SvgIcon {...props}>
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="8" x2="12" y2="12"></line>
+      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+    </SvgIcon>
+  );
+}
+

@@ -31,7 +31,7 @@ create policy "users manage their own profile"
   with check (auth.uid() = id);
 
 -- ------------------------------------------------------------
--- requests: posted by students, owned by auth.uid()
+-- requests: posted by students, claimed & fulfilled by experts
 -- ------------------------------------------------------------
 create table if not exists public.requests (
   id uuid primary key default gen_random_uuid(),
@@ -44,35 +44,44 @@ create table if not exists public.requests (
   budget_min numeric check (budget_min >= 0),
   budget_max numeric check (budget_max >= 0),
   deadline text check (char_length(deadline) <= 40),
+  status text not null default 'open' check (status in ('open','in_progress','submitted','completed','revision_requested')),
+  expert_id uuid references auth.users(id) on delete set null,
+  expert_name text check (char_length(expert_name) <= 100),
+  submission_notes text check (char_length(submission_notes) <= 3000),
+  submission_files jsonb default '[]'::jsonb,
+  submitted_at timestamptz,
+  revision_notes text check (char_length(revision_notes) <= 2000),
+  student_rating integer check (student_rating between 1 and 5),
+  student_feedback text check (char_length(student_feedback) <= 1000),
+  completed_at timestamptz,
   created_at timestamptz not null default now()
 );
 
 alter table public.requests enable row level security;
 
--- Students can insert requests only under their own user_id — this is the
--- check that stops anyone from forging another student's name/contact info
--- onto a request; there IS no separate name/email/whatsapp column here
--- anymore, because that data lives once, in profiles, and is looked up by
--- user_id rather than copy-pasted onto every row.
+-- Students can insert requests only under their own user_id
 create policy "owners can insert their own requests"
   on public.requests for insert
   to authenticated
   with check (auth.uid() = user_id);
 
--- Owners can read, update, and delete only their own requests (which is how
--- the student dashboard sees full detail — join profiles on user_id if you
--- need the poster's contact info from a trusted server context).
-create policy "owners manage their own requests"
+-- Students can read their own requests; assigned experts can read their active jobs
+create policy "users can read related requests"
   on public.requests for select
   to authenticated
-  using (auth.uid() = user_id);
+  using (auth.uid() = user_id or auth.uid() = expert_id);
 
-create policy "owners can update their own requests"
+-- Students can update their own requests (or approve/request revision); experts can claim open requests or update submissions
+create policy "users can update related requests"
   on public.requests for update
   to authenticated
-  using (auth.uid() = user_id)
-  with check (auth.uid() = user_id);
+  using (
+    auth.uid() = user_id 
+    or auth.uid() = expert_id 
+    or (status = 'open' and expert_id is null)
+  );
 
+-- Only student owner can delete their request
 create policy "owners can delete their own requests"
   on public.requests for delete
   to authenticated
@@ -80,13 +89,13 @@ create policy "owners can delete their own requests"
 
 -- ------------------------------------------------------------
 -- requests_public: what experts / logged-out visitors can browse.
--- Deliberately excludes user_id and any contact info — nobody
--- reads another student's email/WhatsApp through this.
+-- Deliberately excludes user_id and private contact info.
 -- ------------------------------------------------------------
 create or replace view public.requests_public as
   select id, title, category, subject, academic_level, description,
-         budget_min, budget_max, deadline, created_at
+         budget_min, budget_max, deadline, status, created_at
   from public.requests
+  where status in ('open', 'in_progress')
   order by created_at desc;
 
 grant select on public.requests_public to anon, authenticated;
