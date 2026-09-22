@@ -51,6 +51,49 @@ const CATEGORIES = [
   },
 ];
 
+const HERO_PREVIEWS = {
+  'Assignment Guidance': {
+    title: 'Guidance on Environmental Economics Thesis & Model Analysis',
+    subject: 'Economics / Policy',
+    level: 'Master’s Degree',
+    budget: '₹1,800 – ₹3,500',
+    deadline: '3 Days',
+    expert: 'Dr. Arthur Sterling • Ph.D. Oxford',
+    expertRating: '4.98 (124 reviews)',
+    brief: 'Need structured feedback on empirical methodology, statistical regression checks, and synthesis of recent policy papers.',
+  },
+  'Research Support': {
+    title: 'Literature Review & Scholarly Source Synthesis in AI Healthcare',
+    subject: 'Computer Science / BioMed',
+    level: 'Postgraduate',
+    budget: '₹2,500 – ₹5,000',
+    deadline: '4 Days',
+    expert: 'Prof. Elena Vance • Ph.D. Cambridge',
+    expertRating: '5.0 (89 reviews)',
+    brief: 'Synthesize 25+ peer-reviewed journal articles on predictive diagnostic algorithms with comprehensive citation mapping.',
+  },
+  'Proofreading': {
+    title: 'Dissertation Chapter Proofreading & Academic Tone Polishing',
+    subject: 'Clinical Psychology',
+    level: 'Doctoral (Ph.D.)',
+    budget: '₹1,500 – ₹3,000',
+    deadline: '48 Hours',
+    expert: 'Claire Bennett • M.A. Harvard',
+    expertRating: '4.95 (210 reviews)',
+    brief: 'Refine academic prose, eliminate structural ambiguities, and ensure pristine grammatical coherence across 6,000 words.',
+  },
+  'Formatting': {
+    title: 'APA 7th & IEEE Multi-Journal Citation & Layout Compliance',
+    subject: 'Engineering & Data Systems',
+    level: 'Undergraduate',
+    budget: '₹800 – ₹1,800',
+    deadline: '24 Hours',
+    expert: 'Marcus Brody • Academic Editor',
+    expertRating: '4.92 (167 reviews)',
+    brief: 'Format in-text citations, compile accurate references, and style figures and mathematical formulas per journal guidelines.',
+  },
+};
+
 const WORKFLOW_STEPS = [
   { name: '1. Brief', title: 'Post Brief & Budget', desc: 'Describe your requirements, academic level, and target deadline.', time: '2 mins' },
   { name: '2. Match', title: 'Connect with Experts', desc: 'Review qualified experts in your subject area without spam.', time: '15 mins' },
@@ -81,11 +124,13 @@ export default function Home() {
   const { requests } = useApp();
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
+  const [heroCategory, setHeroCategory] = useState('Assignment Guidance');
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [openFaq, setOpenFaq] = useState(null);
 
   const openCount = requests.length;
   const totalBudget = requests.reduce((sum, r) => sum + Number(r.budget_max ?? r.budgetMax ?? 0), 0);
+  const currentPreview = HERO_PREVIEWS[heroCategory] || HERO_PREVIEWS['Assignment Guidance'];
 
   function toggleFaq(idx) {
     setOpenFaq(openFaq === idx ? null : idx);
@@ -93,76 +138,131 @@ export default function Home() {
 
   return (
     <>
-      {/* Hero Section */}
-      <section className="wrap hero-grid">
-        <div>
-          <div className="eyebrow">
-            <IconZap size={14} color="var(--blue)" /> ACADEMIC SUPPORT, ON YOUR SCHEDULE
-          </div>
-          <h1 style={{ marginTop: 14 }}>
-            Too much academic work.<br />
-            <span style={{ color: 'var(--blue)' }}>Get expert guidance</span> fast.
-          </h1>
-          <p className="lede" style={{ marginTop: 18 }}>
-            Connect with verified academic specialists for research guidance, proofreading, citation formatting, presentations, and 1-on-1 tutoring — tailored to your exact rubric and deadline.
-          </p>
-          <div className="hero-cta">
-            <Link to="/signup" className="btn btn-primary btn-lg">
-              Post a Request Free →
-            </Link>
-            <Link to="/requests" className="btn btn-ghost btn-lg">
-              Browse Open Board
-            </Link>
-          </div>
-
-          <div className="trust-pills">
-            <div className="trust-pill">
-              <span className="trust-pill-icon"><IconShield size={16} color="var(--success)" /></span> 100% Confidential
+      {/* Redesigned Modern Hero Section */}
+      <section className="hero-section-wrapper">
+        <div className="wrap hero-grid">
+          <div className="hero-content">
+            {/* Announcement Pill */}
+            <div className="hero-announcement-pill">
+              <span className="pulse-dot"></span>
+              <span className="pill-tag">2026 EDITION</span>
+              <span className="pill-text">Verified Academic Specialists & 1-on-1 Mentorship</span>
             </div>
-            <div className="trust-pill">
-              <span className="trust-pill-icon"><IconGraduationCap size={16} color="var(--success)" /></span> Verified Academic Experts
-            </div>
-            <div className="trust-pill">
-              <span className="trust-pill-icon"><IconClock size={16} color="var(--success)" /></span> Deadline Guarantee
-            </div>
-          </div>
-        </div>
 
-        {/* Interactive Words in Motion Visualizer */}
-        <div className="card" style={{ boxShadow: 'var(--shadow-lg)', border: '1px solid var(--border-strong)', padding: '28px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-            <div className="eyebrow">WORDS IN MOTION</div>
-            <span className="badge badge-success">Live Workflow</span>
-          </div>
+            {/* Bold Headline */}
+            <h1 className="hero-title">
+              Master complex assignments with{' '}
+              <span className="hero-gradient-text">1-on-1 academic specialists.</span>
+            </h1>
 
-          <div className="workflow-step-tabs">
-            {WORKFLOW_STEPS.map((s, idx) => (
-              <button
-                key={s.name}
-                onClick={() => setActiveStep(idx)}
-                className={`workflow-step-tab ${activeStep === idx ? 'active' : ''}`}
-              >
-                {s.name}
-              </button>
-            ))}
-          </div>
-
-          <div style={{ background: 'var(--paper)', borderRadius: 'var(--r-md)', padding: 20, border: '1px solid var(--border)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-              <h3 style={{ fontSize: 18, color: 'var(--ink)' }}>{WORKFLOW_STEPS[activeStep].title}</h3>
-              <span className="badge badge-warn">{WORKFLOW_STEPS[activeStep].time}</span>
-            </div>
-            <p className="muted" style={{ fontSize: 14, lineHeight: 1.5 }}>
-              {WORKFLOW_STEPS[activeStep].desc}
+            {/* Sub-headline */}
+            <p className="hero-subtitle">
+              Get rubric-aligned feedback, in-depth literature synthesis, APA/IEEE citation formatting, and expert proofreading — confidential, on-time, and tailored to your goals.
             </p>
-            <div style={{ marginTop: 16, paddingTop: 14, borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: 12.5, color: 'var(--ink-muted)' }}>Step {activeStep + 1} of 4</span>
-              <button
-                className="btn btn-subtle btn-sm"
-                onClick={() => setActiveStep((prev) => (prev + 1) % WORKFLOW_STEPS.length)}
-              >
-                Next Step →
-              </button>
+
+            {/* CTA Group */}
+            <div className="hero-cta-group">
+              <div className="hero-cta">
+                <Link to="/signup" className="btn btn-accent btn-lg hero-btn-glow">
+                  Post a Request Free →
+                </Link>
+                <Link to="/requests" className="btn btn-ghost btn-lg">
+                  Browse Open Board ({openCount})
+                </Link>
+              </div>
+              <div className="hero-micro-reassurance">
+                <span>⚡ Free to post</span>
+                <span className="bullet-sep">•</span>
+                <span>🔒 100% Confidential</span>
+                <span className="bullet-sep">•</span>
+                <span>⏱️ 24h Express Turnaround</span>
+              </div>
+            </div>
+
+            {/* Social Proof & Trust Badges */}
+            <div className="hero-social-proof">
+              <div className="avatar-group">
+                <span className="hero-avatar" style={{ background: '#2563EB' }}>AK</span>
+                <span className="hero-avatar" style={{ background: '#059669' }}>MR</span>
+                <span className="hero-avatar" style={{ background: '#7C3AED' }}>SL</span>
+                <span className="hero-avatar" style={{ background: '#D97706' }}>JD</span>
+              </div>
+              <div className="proof-info">
+                <div className="stars-row">
+                  <span className="stars">★★★★★</span>
+                  <span className="rating-score">4.9/5</span>
+                </div>
+                <div className="proof-subtext">From 2,400+ scholars across top universities</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Interactive Live Platform Showcase Card */}
+          <div className="hero-showcase-container">
+            <div className="card hero-interactive-card">
+              {/* Card Top Bar */}
+              <div className="showcase-header">
+                <div className="showcase-live-indicator">
+                  <span className="live-pulse"></span>
+                  <span>LIVE PLATFORM MATCH</span>
+                </div>
+                <div className="showcase-budget-pill">
+                  {currentPreview.budget}
+                </div>
+              </div>
+
+              {/* Category Switcher Tabs */}
+              <div className="showcase-category-row">
+                {Object.keys(HERO_PREVIEWS).map((cat) => (
+                  <button
+                    key={cat}
+                    type="button"
+                    onClick={() => setHeroCategory(cat)}
+                    className={`showcase-cat-chip ${heroCategory === cat ? 'active' : ''}`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+
+              {/* Assignment Brief Simulator Box */}
+              <div className="showcase-brief-box">
+                <div className="showcase-badges-row">
+                  <span className="badge">{heroCategory}</span>
+                  <span className="badge badge-neutral">{currentPreview.level}</span>
+                  <span className="badge badge-warn">⏱️ {currentPreview.deadline}</span>
+                </div>
+
+                <h3 className="showcase-assignment-title">
+                  {currentPreview.title}
+                </h3>
+
+                <p className="showcase-assignment-desc">
+                  {currentPreview.brief}
+                </p>
+
+                <div className="showcase-expert-match">
+                  <div className="expert-avatar-icon">
+                    <IconGraduationCap size={20} color="var(--blue)" />
+                  </div>
+                  <div className="expert-match-details">
+                    <div className="expert-name">{currentPreview.expert}</div>
+                    <div className="expert-rating">⭐ {currentPreview.expertRating} • Verified Specialist</div>
+                  </div>
+                  <span className="badge badge-success" style={{ marginLeft: 'auto' }}>Matched</span>
+                </div>
+              </div>
+
+              {/* Bottom Interactive Trigger */}
+              <div className="showcase-footer">
+                <div className="showcase-footer-stat">
+                  <span className="stat-label">Subject:</span>
+                  <strong>{currentPreview.subject}</strong>
+                </div>
+                <Link to="/signup" className="btn btn-primary btn-sm">
+                  Try Request Wizard →
+                </Link>
+              </div>
             </div>
           </div>
         </div>
