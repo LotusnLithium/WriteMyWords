@@ -70,7 +70,7 @@ export default function RequestCard({ r, onClick }) {
         )}
       </div>
 
-      <div style={{ paddingTop: 12, borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 13 }}>
+      <div style={{ paddingTop: 12, borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 13, flexWrap: 'wrap', gap: 6 }}>
         <div style={{ fontWeight: 600, color: 'var(--ink)' }}>
           ₹{budgetMin.toLocaleString('en-IN')}–₹{budgetMax.toLocaleString('en-IN')}
         </div>

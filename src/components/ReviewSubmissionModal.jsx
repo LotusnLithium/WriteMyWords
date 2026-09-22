@@ -172,18 +172,13 @@ export default function ReviewSubmissionModal({ request, onClose, onSuccess }) {
         </div>
 
         {/* Actions Choice Tabs */}
-        <div style={{ display: 'flex', borderBottom: '1px solid var(--border)', marginBottom: 20 }}>
+        <div className="review-modal-tabs">
           <button
             type="button"
+            className="review-modal-tab"
             style={{
-              padding: '10px 16px',
-              border: 'none',
-              background: 'none',
-              fontWeight: 600,
-              fontSize: 14,
-              cursor: 'pointer',
               color: actionTab === 'approve' ? 'var(--success)' : 'var(--ink-muted)',
-              borderBottom: actionTab === 'approve' ? '2px solid var(--success)' : 'none',
+              borderBottom: actionTab === 'approve' ? '2.5px solid var(--success)' : '2.5px solid transparent',
             }}
             onClick={() => setActionTab('approve')}
           >
@@ -191,15 +186,10 @@ export default function ReviewSubmissionModal({ request, onClose, onSuccess }) {
           </button>
           <button
             type="button"
+            className="review-modal-tab"
             style={{
-              padding: '10px 16px',
-              border: 'none',
-              background: 'none',
-              fontWeight: 600,
-              fontSize: 14,
-              cursor: 'pointer',
               color: actionTab === 'revision' ? 'var(--warning)' : 'var(--ink-muted)',
-              borderBottom: actionTab === 'revision' ? '2px solid var(--warning)' : 'none',
+              borderBottom: actionTab === 'revision' ? '2.5px solid var(--warning)' : '2.5px solid transparent',
             }}
             onClick={() => setActionTab('revision')}
           >

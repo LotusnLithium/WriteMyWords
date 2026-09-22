@@ -65,11 +65,11 @@ export default function ExpertDashboard() {
 
       <main className="app-main">
         {/* Welcome Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 28, flexWrap: 'wrap', gap: 16 }}>
+        <div className="dash-header-wrap">
           <div>
             <div className="eyebrow" style={{ marginBottom: 4 }}>EXPERT WORKSPACE</div>
-            <h1 style={{ fontSize: 'clamp(24px, 4vw, 32px)' }}>Welcome back, {firstName}</h1>
-            <p className="muted" style={{ fontSize: 14.5, marginTop: 4 }}>
+            <h1 style={{ fontSize: 'clamp(22px, 4vw, 30px)' }}>Welcome back, {firstName}</h1>
+            <p className="muted" style={{ fontSize: 14, marginTop: 4 }}>
               Manage active academic engagements, submit deliverables, and track completed student projects.
             </p>
           </div>
@@ -81,23 +81,16 @@ export default function ExpertDashboard() {
         {/* Action Alert for Revision Request if any */}
         {activeJobs.some((r) => r.status === 'revision_requested') && (
           <div
+            className="alert-banner-box"
             style={{
               background: 'var(--error-subtle)',
               border: '1px solid var(--error)',
-              borderRadius: 'var(--r-sm)',
-              padding: '14px 18px',
-              marginBottom: 24,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              flexWrap: 'wrap',
-              gap: 12,
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <IconAlertCircle size={20} color="var(--error)" />
               <div>
-                <strong style={{ color: 'var(--error)' }}>Revision Requested on Assignment</strong>
+                <strong style={{ color: 'var(--error)', fontSize: 15 }}>Revision Requested on Assignment</strong>
                 <div style={{ fontSize: 13, color: 'var(--ink)' }}>
                   A student has provided revision feedback on their deliverable. Resubmit the updated solution.
                 </div>
@@ -105,7 +98,7 @@ export default function ExpertDashboard() {
             </div>
             <button
               className="btn btn-primary"
-              style={{ fontSize: 12.5, padding: '6px 14px', background: 'var(--error)', borderColor: 'var(--error)' }}
+              style={{ fontSize: 12.5, padding: '7px 14px', background: 'var(--error)', borderColor: 'var(--error)' }}
               onClick={() => {
                 const job = activeJobs.find((r) => r.status === 'revision_requested');
                 if (job) setSubmittingJob(job);

@@ -74,11 +74,11 @@ export default function StudentDashboard() {
 
       <main className="app-main">
         {/* Welcome Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 28, flexWrap: 'wrap', gap: 16 }}>
+        <div className="dash-header-wrap">
           <div>
             <div className="eyebrow" style={{ marginBottom: 4 }}>STUDENT WORKSPACE</div>
-            <h1 style={{ fontSize: 'clamp(24px, 4vw, 32px)' }}>Welcome back, {firstName}</h1>
-            <p className="muted" style={{ fontSize: 14.5, marginTop: 4 }}>
+            <h1 style={{ fontSize: 'clamp(22px, 4vw, 30px)' }}>Welcome back, {firstName}</h1>
+            <p className="muted" style={{ fontSize: 14, marginTop: 4 }}>
               Track your open academic requests, review expert submissions, and approve completed projects.
             </p>
           </div>
@@ -90,35 +90,28 @@ export default function StudentDashboard() {
         {/* Action Alert Banner when an expert submitted work */}
         {readyForReviewRequests.length > 0 && (
           <div
+            className="alert-banner-box"
             style={{
               background: 'var(--indigo-subtle)',
               border: '1px solid var(--indigo)',
-              borderRadius: 'var(--r-sm)',
-              padding: '16px 20px',
-              marginBottom: 24,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              flexWrap: 'wrap',
-              gap: 14,
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'var(--indigo)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <IconSend size={20} color="#fff" />
+              <div style={{ width: 38, height: 38, borderRadius: '50%', background: 'var(--indigo)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <IconSend size={18} color="#fff" />
               </div>
               <div>
-                <strong style={{ color: 'var(--indigo)', fontSize: 16 }}>
+                <strong style={{ color: 'var(--indigo)', fontSize: 15 }}>
                   {readyForReviewRequests.length} Deliverable(s) Ready for Your Review!
                 </strong>
-                <div style={{ fontSize: 13.5, color: 'var(--ink-secondary)', marginTop: 2 }}>
-                  Your assigned academic expert has submitted completed solution files. Review and approve or request revisions.
+                <div style={{ fontSize: 13, color: 'var(--ink-secondary)', marginTop: 2 }}>
+                  Your assigned academic expert has submitted completed solution files.
                 </div>
               </div>
             </div>
             <button
               className="btn btn-primary"
-              style={{ background: 'var(--indigo)', borderColor: 'var(--indigo)', fontSize: 13.5 }}
+              style={{ background: 'var(--indigo)', borderColor: 'var(--indigo)', fontSize: 13 }}
               onClick={() => setReviewingRequest(readyForReviewRequests[0])}
             >
               Review Deliverable Now →
