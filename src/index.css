@@ -108,22 +108,29 @@ img, svg {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding-left: 24px !important;
-  padding-right: 24px !important;
+  padding-left: 24px;
+  padding-right: 24px;
   box-sizing: border-box;
 }
 
 @media (max-width: 768px) {
   .wrap {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }
 
 @media (max-width: 480px) {
   .wrap {
-    padding-left: 18px !important;
-    padding-right: 18px !important;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media (max-width: 360px) {
+  .wrap {
+    padding-left: 14px;
+    padding-right: 14px;
   }
 }
 
@@ -152,7 +159,7 @@ h2 {
 }
 
 h3 {
-  font-size: clamp(16.5px, 2.6vw, 21px);
+  font-size: clamp(16px, 2.6vw, 20px);
 }
 
 .eyebrow {
@@ -202,8 +209,9 @@ h3 {
   .btn {
     white-space: normal;
     line-height: 1.3;
-    padding: 10px 14px;
+    padding: 10px 16px;
     font-size: 13.5px;
+    min-height: 44px;
   }
 }
 
@@ -500,11 +508,13 @@ header.nav {
   box-shadow: var(--shadow-xs);
   transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
   word-break: break-word;
+  box-sizing: border-box;
+  min-width: 0;
 }
 
 @media (max-width: 480px) {
   .card {
-    padding: 18px 16px;
+    padding: 16px 14px;
     border-radius: var(--r-md);
   }
 }
@@ -562,7 +572,13 @@ section {
 
 @media (max-width: 768px) {
   section {
-    padding: 38px 0;
+    padding: 36px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  section {
+    padding: 26px 0;
   }
 }
 
@@ -602,9 +618,19 @@ section {
 }
 
 @media (max-width: 640px) {
-  .grid-2, .grid-3, .grid-4 {
+  .grid-2, .grid-3 {
     grid-template-columns: 1fr;
     gap: 14px;
+  }
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .grid-4 {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -1472,11 +1498,13 @@ section {
   padding: 32px 28px 80px;
   max-width: 1100px;
   width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
 }
 
 @media (max-width: 768px) {
   .app-main {
-    padding: 22px 16px 60px;
+    padding: 20px 16px 60px;
   }
 }
 
@@ -1486,18 +1514,28 @@ section {
   grid-template-columns: repeat(4, 1fr);
   gap: 14px;
   margin-bottom: 28px;
+  width: 100%;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 960px) {
   .metric-row {
     grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
+  .metric-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 340px) {
   .metric-row {
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 8px;
   }
 }
 
@@ -1510,18 +1548,37 @@ section {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .metric {
-    padding: 16px;
+    padding: 14px 12px;
     border-radius: var(--r-md);
+  }
+  .metric .num {
+    font-size: clamp(20px, 5vw, 24px);
+    line-height: 1.1;
+  }
+  .metric .lbl {
+    font-size: 12px;
+    margin-top: 6px;
+    line-height: 1.3;
+  }
+  .metric-icon-badge {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  .metric-icon-badge svg {
+    width: 16px !important;
+    height: 16px !important;
   }
 }
 
 .metric .num {
   font-family: var(--serif);
-  font-size: clamp(26px, 4vw, 32px);
+  font-size: clamp(24px, 4vw, 32px);
   color: var(--ink);
   line-height: 1;
 }
@@ -2037,12 +2094,29 @@ footer {
   flex-wrap: wrap;
 }
 
-@media (max-width: 480px) {
-  .wizard-review-summary {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    padding: 12px 14px;
+/* Directory and Static Page Sections */
+.directory-page-section {
+  padding-top: 36px;
+  padding-bottom: 50px;
+  min-height: 80vh;
+}
+
+@media (max-width: 600px) {
+  .directory-page-section {
+    padding-top: 20px;
+    padding-bottom: 36px;
+  }
+}
+
+.static-page-section {
+  padding-top: 48px;
+  padding-bottom: 50px;
+}
+
+@media (max-width: 600px) {
+  .static-page-section {
+    padding-top: 24px;
+    padding-bottom: 36px;
   }
 }
 

@@ -114,7 +114,7 @@ export default function ExpertDashboard() {
           <div className="metric">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div className="num" style={{ color: 'var(--warning)' }}>{activeJobs.length}</div>
-              <div style={{ width: 38, height: 38, borderRadius: 'var(--r-sm)', background: 'var(--warning-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div className="metric-icon-badge" style={{ width: 38, height: 38, borderRadius: 'var(--r-sm)', background: 'var(--warning-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <IconBriefcase size={20} color="var(--warning)" />
               </div>
             </div>
@@ -123,7 +123,7 @@ export default function ExpertDashboard() {
           <div className="metric">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div className="num" style={{ color: 'var(--indigo)' }}>{underReviewJobs.length}</div>
-              <div style={{ width: 38, height: 38, borderRadius: 'var(--r-sm)', background: 'var(--indigo-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div className="metric-icon-badge" style={{ width: 38, height: 38, borderRadius: 'var(--r-sm)', background: 'var(--indigo-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <IconSend size={20} color="var(--indigo)" />
               </div>
             </div>
@@ -132,7 +132,7 @@ export default function ExpertDashboard() {
           <div className="metric">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div className="num" style={{ color: 'var(--success)' }}>{completedJobs.length}</div>
-              <div style={{ width: 38, height: 38, borderRadius: 'var(--r-sm)', background: 'var(--success-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div className="metric-icon-badge" style={{ width: 38, height: 38, borderRadius: 'var(--r-sm)', background: 'var(--success-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <IconCheckCircle size={20} color="var(--success)" />
               </div>
             </div>
@@ -143,7 +143,7 @@ export default function ExpertDashboard() {
               <div className="num" style={{ color: 'var(--success)' }}>
                 ₹{totalEarned.toLocaleString('en-IN')}
               </div>
-              <div style={{ width: 38, height: 38, borderRadius: 'var(--r-sm)', background: 'var(--success-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div className="metric-icon-badge" style={{ width: 38, height: 38, borderRadius: 'var(--r-sm)', background: 'var(--success-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <IconCurrency size={20} color="var(--success)" />
               </div>
             </div>

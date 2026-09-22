@@ -124,7 +124,7 @@ export default function StudentDashboard() {
           <div className="metric">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div className="num">{myRequests.length}</div>
-              <div style={{ width: 38, height: 38, borderRadius: 'var(--r-sm)', background: 'var(--blue-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div className="metric-icon-badge" style={{ width: 38, height: 38, borderRadius: 'var(--r-sm)', background: 'var(--blue-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <IconFileText size={20} color="var(--blue)" />
               </div>
             </div>
@@ -133,7 +133,7 @@ export default function StudentDashboard() {
           <div className="metric">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div className="num" style={{ color: 'var(--warning)' }}>{inProgressRequests.length}</div>
-              <div style={{ width: 38, height: 38, borderRadius: 'var(--r-sm)', background: 'var(--warning-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div className="metric-icon-badge" style={{ width: 38, height: 38, borderRadius: 'var(--r-sm)', background: 'var(--warning-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <IconZap size={20} color="var(--warning)" />
               </div>
             </div>
@@ -142,7 +142,7 @@ export default function StudentDashboard() {
           <div className="metric">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div className="num" style={{ color: 'var(--indigo)' }}>{readyForReviewRequests.length}</div>
-              <div style={{ width: 38, height: 38, borderRadius: 'var(--r-sm)', background: 'var(--indigo-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div className="metric-icon-badge" style={{ width: 38, height: 38, borderRadius: 'var(--r-sm)', background: 'var(--indigo-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <IconMessageSquare size={20} color="var(--indigo)" />
               </div>
             </div>
@@ -151,7 +151,7 @@ export default function StudentDashboard() {
           <div className="metric">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div className="num" style={{ color: 'var(--success)' }}>{completedRequests.length}</div>
-              <div style={{ width: 38, height: 38, borderRadius: 'var(--r-sm)', background: 'var(--success-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div className="metric-icon-badge" style={{ width: 38, height: 38, borderRadius: 'var(--r-sm)', background: 'var(--success-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <IconCheckCircle size={20} color="var(--success)" />
               </div>
             </div>
