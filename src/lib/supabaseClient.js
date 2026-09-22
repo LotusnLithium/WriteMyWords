@@ -18,7 +18,7 @@ export const supabase = url && anonKey && url.startsWith('http')
 
 /* ---------------- validation ---------------- */
 export function isValidEmail(v) {
-  return /^[^\s@]{1,64}@[^\s@]{1,190}\.[^\s@]{2,24}$/.test((v || '').trim());
+  return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,24}$/.test((v || '').trim());
 }
 
 export function isValidWhatsapp(v) {
@@ -26,11 +26,40 @@ export function isValidWhatsapp(v) {
 }
 
 export function isStrongPassword(v) {
-  return typeof v === 'string' && v.length >= 6; // Relaxed to 6+ chars for easier user sign in
+  if (typeof v !== 'string' || v.length < 8) return false;
+  // Requires at least one letter and one number
+  return /[a-zA-Z]/.test(v) && /[0-9]/.test(v);
 }
 
 export function cleanText(v, maxLen = 2000) {
-  return (v || '').toString().trim().slice(0, maxLen);
+  if (!v) return '';
+  // Strip HTML tags and dangerous javascript: schemes
+  const sanitized = v
+    .toString()
+    .replace(/<[^>]*>/g, '')
+    .replace(/javascript:/gi, '')
+    .trim();
+  return sanitized.slice(0, maxLen);
+}
+
+export const ALLOWED_EXTENSIONS = ['pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'txt', 'zip', 'png', 'jpg', 'jpeg'];
+export const MAX_FILE_SIZE_BYTES = 25 * 1024 * 1024; // 25 MB
+
+export function validateFileAttachment(file) {
+  if (!file) return { valid: false, error: 'No file provided' };
+  
+  if (file.size > MAX_FILE_SIZE_BYTES) {
+    return { valid: false, error: `File "${file.name}" exceeds 25MB limit.` };
+  }
+
+  const parts = file.name.split('.');
+  const ext = parts.length > 1 ? parts.pop().toLowerCase() : '';
+  
+  if (!ALLOWED_EXTENSIONS.includes(ext)) {
+    return { valid: false, error: `File type ".${ext}" is not permitted for security reasons.` };
+  }
+
+  return { valid: true };
 }
 
 /* ---------------- auth ---------------- */

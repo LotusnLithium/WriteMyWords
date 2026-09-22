@@ -59,8 +59,8 @@ export default function Signup() {
       return;
     }
     if (!isStrongPassword(form.password)) {
-      setErrorMessage('Password must be at least 6 characters long');
-      toast('Password must be at least 6 characters');
+      setErrorMessage('Password must be at least 8 characters and contain letters and numbers');
+      toast('Password must be 8+ characters with letters & numbers');
       return;
     }
 
@@ -205,7 +205,7 @@ export default function Signup() {
                 autoComplete="new-password"
                 value={form.password}
                 onChange={update('password')}
-                placeholder="At least 6 characters"
+                placeholder="At least 8 characters (letters & numbers)"
                 required
                 style={{ paddingRight: 44 }}
               />

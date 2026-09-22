@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Navigate, useNavigate, Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext.jsx';
-import { cleanText } from '../lib/supabaseClient';
+import { cleanText, validateFileAttachment } from '../lib/supabaseClient';
 import {
   IconFileText,
   IconSearch,
@@ -94,12 +94,22 @@ export default function RequestWizard() {
   function handleFileAdd(e) {
     const selected = Array.from(e.target.files || []);
     if (selected.length) {
-      const newFiles = selected.map((f) => ({
-        name: f.name,
-        size: (f.size / (1024 * 1024)).toFixed(2) + ' MB',
-      }));
-      setFiles((prev) => [...prev, ...newFiles]);
-      toast(`${selected.length} file(s) attached`);
+      const validFiles = [];
+      for (const f of selected) {
+        const check = validateFileAttachment(f);
+        if (!check.valid) {
+          toast(`Cannot attach ${f.name}: ${check.error}`);
+          continue;
+        }
+        validFiles.push({
+          name: f.name.replace(/[^a-zA-Z0-9._\-]/g, '_'),
+          size: (f.size / (1024 * 1024)).toFixed(2) + ' MB',
+        });
+      }
+      if (validFiles.length) {
+        setFiles((prev) => [...prev, ...validFiles]);
+        toast(`${validFiles.length} file(s) attached`);
+      }
     }
   }
 
