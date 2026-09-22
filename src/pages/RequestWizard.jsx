@@ -353,7 +353,7 @@ export default function RequestWizard() {
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+              <div className="wizard-budget-grid">
                 <div className="field">
                   <label>Minimum (₹)</label>
                   <input
@@ -391,7 +391,7 @@ export default function RequestWizard() {
                   display: 'block',
                   border: '2px dashed var(--border-strong)',
                   borderRadius: 'var(--r-lg)',
-                  padding: '40px 20px',
+                  padding: '36px 18px',
                   textAlign: 'center',
                   background: 'var(--surface)',
                   cursor: 'pointer',
@@ -405,8 +405,8 @@ export default function RequestWizard() {
                   style={{ display: 'none' }}
                   accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,.zip"
                 />
-                <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'var(--blue-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
-                  <IconUploadCloud size={28} color="var(--blue)" />
+                <div style={{ width: 52, height: 52, borderRadius: '50%', background: 'var(--blue-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
+                  <IconUploadCloud size={26} color="var(--blue)" />
                 </div>
                 <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--ink)' }}>
                   Click to browse or drag files here
@@ -486,7 +486,7 @@ export default function RequestWizard() {
                   <span className="tag">Files: {files.length} attached</span>
                 </div>
 
-                <div style={{ padding: 14, background: 'var(--surface-alt)', borderRadius: 'var(--r-sm)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 14 }}>
+                <div className="wizard-review-summary">
                   <div>
                     <span className="muted">Budget: </span>
                     <strong>₹{Number(data.budget_min).toLocaleString('en-IN')} – ₹{Number(data.budget_max).toLocaleString('en-IN')}</strong>

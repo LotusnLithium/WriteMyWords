@@ -1361,3 +1361,112 @@ footer {
     gap: 8px;
   }
 }
+
+/* Services Banner Container */
+.services-banner {
+  background: var(--surface-alt);
+  border-radius: var(--r-xl);
+  padding: 48px 32px;
+  border: 1px solid var(--border);
+}
+
+@media (max-width: 768px) {
+  .services-banner {
+    padding: 32px 20px;
+    border-radius: var(--r-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .services-banner {
+    padding: 24px 16px;
+    border-radius: var(--r-md);
+  }
+}
+
+/* Home CTA Card */
+.home-cta-card {
+  max-width: 620px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, var(--ink) 0%, #1E293B 100%);
+  color: #fff;
+  padding: 38px 28px;
+  border-radius: var(--r-xl);
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+}
+
+@media (max-width: 480px) {
+  .home-cta-card {
+    padding: 26px 18px;
+    border-radius: var(--r-lg);
+  }
+}
+
+.home-cta-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+  .home-cta-actions {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+  .home-cta-actions .btn {
+    width: 100%;
+  }
+}
+
+/* FAQ Cards */
+.faq-card {
+  padding: 18px 22px;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+@media (max-width: 480px) {
+  .faq-card {
+    padding: 16px 14px;
+  }
+}
+
+/* Wizard Budget Grid */
+.wizard-budget-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 520px) {
+  .wizard-budget-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+/* Wizard Review Summary */
+.wizard-review-summary {
+  padding: 14px 16px;
+  background: var(--surface-alt);
+  border-radius: var(--r-sm);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+  .wizard-review-summary {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px 14px;
+  }
+}
+

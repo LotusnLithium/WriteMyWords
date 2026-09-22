@@ -204,29 +204,31 @@ export default function Home() {
       </section>
 
       {/* Services Categories */}
-      <section className="wrap" style={{ background: 'var(--surface-alt)', borderRadius: 'var(--r-xl)', padding: '56px 32px', margin: '20px auto' }}>
-        <div className="section-head">
-          <div className="eyebrow">WHAT WE SUPPORT</div>
-          <h2>Academic services designed for high performers</h2>
-          <p className="muted" style={{ marginTop: 8 }}>Tap any category to explore active requests or post your own.</p>
-        </div>
-        <div className="grid grid-3">
-          {CATEGORIES.map((cat) => (
-            <div
-              className="card card-interactive"
-              key={cat.title}
-              onClick={() => navigate(`/requests?category=${encodeURIComponent(cat.title)}`)}
-            >
-              <div style={{ width: 48, height: 48, borderRadius: 'var(--r-md)', background: 'var(--surface-alt)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 14 }}>
-                {cat.icon}
+      <section className="wrap" style={{ paddingTop: 10, paddingBottom: 20 }}>
+        <div className="services-banner">
+          <div className="section-head">
+            <div className="eyebrow">WHAT WE SUPPORT</div>
+            <h2>Academic services designed for high performers</h2>
+            <p className="muted" style={{ marginTop: 8 }}>Tap any category to explore active requests or post your own.</p>
+          </div>
+          <div className="grid grid-3">
+            {CATEGORIES.map((cat) => (
+              <div
+                className="card card-interactive"
+                key={cat.title}
+                onClick={() => navigate(`/requests?category=${encodeURIComponent(cat.title)}`)}
+              >
+                <div style={{ width: 44, height: 44, borderRadius: 'var(--r-md)', background: 'var(--surface-alt)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 14 }}>
+                  {cat.icon}
+                </div>
+                <h3 style={{ fontSize: 18, marginBottom: 8 }}>{cat.title}</h3>
+                <p className="muted" style={{ fontSize: 14 }}>{cat.desc}</p>
+                <div style={{ marginTop: 14, color: 'var(--blue)', fontSize: 13.5, fontWeight: 600 }}>
+                  Explore requests →
+                </div>
               </div>
-              <h3 style={{ fontSize: 18, marginBottom: 8 }}>{cat.title}</h3>
-              <p className="muted" style={{ fontSize: 14 }}>{cat.desc}</p>
-              <div style={{ marginTop: 14, color: 'var(--blue)', fontSize: 13.5, fontWeight: 600 }}>
-                Explore requests →
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
@@ -254,7 +256,7 @@ export default function Home() {
 
       {/* FAQ Accordion */}
       <section className="wrap" style={{ borderTop: '1px solid var(--border)' }}>
-        <div className="section-head" style={{ textAlign: 'center', margin: '0 auto 40px' }}>
+        <div className="section-head" style={{ textAlign: 'center', margin: '0 auto 36px' }}>
           <div className="eyebrow" style={{ justifyContent: 'center' }}>FREQUENTLY ASKED QUESTIONS</div>
           <h2>Everything you need to know</h2>
         </div>
@@ -263,8 +265,7 @@ export default function Home() {
           {FAQS.map((faq, idx) => (
             <div
               key={faq.q}
-              className="card"
-              style={{ padding: '18px 22px', cursor: 'pointer' }}
+              className="card faq-card"
               onClick={() => toggleFaq(idx)}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
@@ -282,13 +283,13 @@ export default function Home() {
           ))}
         </div>
 
-        <div style={{ textAlign: 'center', marginTop: 48 }}>
-          <div className="card" style={{ maxWidth: 600, margin: '0 auto', background: 'linear-gradient(135deg, var(--ink) 0%, #1E293B 100%)', color: '#fff', padding: '36px 24px' }}>
-            <h3 style={{ color: '#fff', fontSize: 24, marginBottom: 10 }}>Ready to get started?</h3>
-            <p style={{ color: '#94A3B8', fontSize: 15, marginBottom: 20 }}>
+        <div style={{ textAlign: 'center', marginTop: 44 }}>
+          <div className="home-cta-card">
+            <h3 style={{ color: '#fff', fontSize: 'clamp(20px, 3.5vw, 24px)', marginBottom: 10 }}>Ready to get started?</h3>
+            <p style={{ color: '#94A3B8', fontSize: 15, marginBottom: 22 }}>
               Join students and verified academic experts collaborating across universities.
             </p>
-            <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <div className="home-cta-actions">
               <Link to="/signup" className="btn btn-accent">
                 Post a Request Now
               </Link>
