@@ -76,31 +76,29 @@ export default function Nav() {
 
           <div className="nav-right">
             {user ? (
-              <>
+              <div className="nav-desktop-actions">
                 <Link
                   to={user.role === 'expert' ? '/expert-dashboard' : '/dashboard'}
                   className="btn btn-ghost btn-sm"
-                  style={{ display: 'none', '@media (min-width: 520px)': { display: 'inline-flex' } }}
                 >
                   Dashboard
                 </Link>
                 <button
                   className="btn btn-primary btn-sm"
                   onClick={handleLogout}
-                  style={{ display: 'none', '@media (min-width: 520px)': { display: 'inline-flex' } }}
                 >
                   Log Out
                 </button>
-              </>
+              </div>
             ) : (
-              <>
-                <Link to="/login" className="btn btn-ghost btn-sm" style={{ display: 'none', '@media (min-width: 520px)': { display: 'inline-flex' } }}>
+              <div className="nav-desktop-actions">
+                <Link to="/login" className="btn btn-ghost btn-sm">
                   Log In
                 </Link>
-                <Link to="/signup" className="btn btn-primary btn-sm" style={{ display: 'none', '@media (min-width: 520px)': { display: 'inline-flex' } }}>
+                <Link to="/signup" className="btn btn-primary btn-sm">
                   Post Request
                 </Link>
-              </>
+              </div>
             )}
 
             <button

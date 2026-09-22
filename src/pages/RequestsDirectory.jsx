@@ -94,7 +94,7 @@ export default function RequestsDirectory() {
       </div>
 
       {/* Search & Filter Controls */}
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: 12, marginBottom: 20 }}>
+      <div className="filter-bar-grid">
         <div className="search-bar" style={{ margin: 0 }}>
           <IconSearch size={18} color="var(--ink-muted)" />
           <input
@@ -117,15 +117,8 @@ export default function RequestsDirectory() {
         <select
           value={academicLevel}
           onChange={(e) => setAcademicLevel(e.target.value)}
-          style={{
-            padding: '10px 14px',
-            borderRadius: 'var(--r-sm)',
-            border: '1.5px solid var(--border-strong)',
-            background: 'var(--surface)',
-            fontSize: 14,
-            fontWeight: 500,
-            color: 'var(--ink)'
-          }}
+          className="filter-select"
+          aria-label="Filter by Academic Level"
         >
           {LEVELS.map((lvl) => (
             <option key={lvl} value={lvl}>{lvl}</option>
@@ -135,15 +128,8 @@ export default function RequestsDirectory() {
         <select
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
-          style={{
-            padding: '10px 14px',
-            borderRadius: 'var(--r-sm)',
-            border: '1.5px solid var(--border-strong)',
-            background: 'var(--surface)',
-            fontSize: 14,
-            fontWeight: 500,
-            color: 'var(--ink)'
-          }}
+          className="filter-select"
+          aria-label="Sort Requests"
         >
           <option value="newest">Sort: Newest First</option>
           <option value="budgetHigh">Sort: Highest Budget</option>

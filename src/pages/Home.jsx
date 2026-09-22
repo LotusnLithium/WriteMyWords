@@ -135,21 +135,12 @@ export default function Home() {
             <span className="badge badge-success">Live Workflow</span>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 6, marginBottom: 20 }}>
+          <div className="workflow-step-tabs">
             {WORKFLOW_STEPS.map((s, idx) => (
               <button
                 key={s.name}
                 onClick={() => setActiveStep(idx)}
-                style={{
-                  padding: '8px 4px',
-                  borderRadius: 'var(--r-xs)',
-                  fontSize: 12,
-                  fontWeight: 600,
-                  textAlign: 'center',
-                  background: activeStep === idx ? 'var(--ink)' : 'var(--surface-alt)',
-                  color: activeStep === idx ? '#fff' : 'var(--ink-secondary)',
-                  transition: 'all var(--transition)'
-                }}
+                className={`workflow-step-tab ${activeStep === idx ? 'active' : ''}`}
               >
                 {s.name}
               </button>

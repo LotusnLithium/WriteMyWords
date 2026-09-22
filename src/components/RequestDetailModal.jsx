@@ -92,21 +92,21 @@ export default function RequestDetailModal({ request, onClose }) {
           </div>
         </div>
 
-        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 24, borderTop: '1px solid var(--border)', paddingTop: 20 }}>
+        <div className="modal-actions">
           {user?.role === 'expert' ? (
-            <button className="btn btn-accent" style={{ flex: 1 }} onClick={handleAction}>
+            <button className="btn btn-accent modal-primary-btn" onClick={handleAction}>
               <IconZap size={18} color="#fff" /> Express Interest / Make Offer
             </button>
           ) : !user ? (
-            <Link to="/signup?role=expert" className="btn btn-accent" style={{ flex: 1 }} onClick={onClose}>
+            <Link to="/signup?role=expert" className="btn btn-accent modal-primary-btn" onClick={onClose}>
               Join as Expert to Respond
             </Link>
           ) : (
-            <Link to="/dashboard/requests/new" className="btn btn-primary" style={{ flex: 1 }} onClick={onClose}>
+            <Link to="/dashboard/requests/new" className="btn btn-primary modal-primary-btn" onClick={onClose}>
               + Post a Similar Request
             </Link>
           )}
-          <button className="btn btn-ghost" onClick={handleShare} title="Share Request" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <button className="btn btn-ghost modal-secondary-btn" onClick={handleShare} title="Share Request">
             <IconShare size={16} color="var(--ink)" /> Share
           </button>
         </div>
